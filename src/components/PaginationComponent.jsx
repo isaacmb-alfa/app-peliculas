@@ -34,18 +34,17 @@ function PaginationComponent({ totalResults, resultsPerPage, onPageChange }) {
         }
     };
     const handleJumpForward = () => {
-        const jumpPage = Math.min(currentPage + 10, totalPages);
+        const jumpPage = Math.min(currentPage + 6, totalPages);
         handlePageChange(jumpPage);
     };
     const handleJumpBackward = () => {
-        const jumpPage = Math.max(currentPage - 10, 1);
+        const jumpPage = Math.max(currentPage - 6, 1);
         handlePageChange(jumpPage);
     };
-
     return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900 p-4 rounded-lg">
+        <nav className="bg-white border-gray-200 dark:bg-gray-900 p-4 rounded-lg hidden lg:block">
             <div className="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between">
-                <span className="text-sm text-gray-700 dark:text-gray-400">
+                <span className="text-sm text-gray-700 dark:text-gray-400 hidden sm:flex sm:justify-center sm:mb-3">
                     {resultsPerPage} resultados de {totalResults}
                 </span>
                 <ul className="flex items-center space-x-1 md:space-x-3">
@@ -58,6 +57,12 @@ function PaginationComponent({ totalResults, resultsPerPage, onPageChange }) {
                             Anterior
                         </button>
                     </li>
+                    <button
+                        onClick={handleJumpBackward}
+                        className="px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-white rounded-lg"
+                    >
+                        ...
+                    </button>
                     {visiblePages.map((page) => (
                         <li key={page}>
                             <button

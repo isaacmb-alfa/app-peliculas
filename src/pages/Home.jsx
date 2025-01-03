@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import NavBarComponent from '../components/NavBarComponent';
 import MovieCardComponent from '../components/MovieCardComponent';
 import SliderComponent from '../components/SliderComponent';
 import PaginationComponent from '../components/PaginationComponent';
 import FooterComponent from '../components/FooterComponent';
+import MobilePagination from '../components/MobilePagination';
 
 function Home() {
+    const navigate = useNavigate();
     const [movieList, setMovieList] = useState([]);
     const [totalPagination, setTotalPagination] = useState({});
     const [isRequestDone, setIsRequestDone] = useState(false);
@@ -14,11 +17,10 @@ function Home() {
     const [currentPage, setCurrentPage] = useState(1);
     /* revisar funcionamiento */
     const [searchResults, setSearchResults] = useState([]);
-    const [totalResults, setTotalResults] = useState(0);
+    const [currentSearchTerm, setCurrentSearchTerm] = useState('');
 
     const handleSearchResults = (results) => {
         setSearchResults(results);
-        setTotalResults(results.total_results);
         console.log('Search Results:', results);
     };
 
@@ -37,6 +39,12 @@ function Home() {
     };
 
     useEffect(() => {
+        const searchTerm = localStorage.getItem('searchTerm');
+        if (searchTerm) {
+            // setCurrentSearchTerm(searchTerm);
+            localStorage.setItem('searchTerm', '');
+            navigate(`/search-results/${searchTerm}`);
+        }
         fetchMovies(currentPage); // Llama fetchMovies al montar el componente y cuando cambian lenguage o currentPage 
     }, [lenguage, currentPage]);
 
@@ -46,10 +54,14 @@ function Home() {
     const handlePageChange = (page) => {
         setCurrentPage(page); // Actualiza la página actual 
     };
+    const handleSearch = (term) => {
+        setCurrentSearchTerm(term);
+        navigate(`/search-result/${term}`); // Redirige solo después de la búsqueda
+    };
 
     return (
         <>
-            <NavBarComponent onSelectChange={handleSelectChange} handleSearchResults={handleSearchResults} />
+            <NavBarComponent onSelectChange={handleSelectChange} handleSearchResults={handleSearchResults} onSearch={handleSearch} currentSearchTerm={currentSearchTerm} />
             <div className='container flex justify-center flex-wrap mx-auto'>
                 <SliderComponent movies={movieList} handleSelectChange={lenguage} />
             </div>
@@ -61,6 +73,7 @@ function Home() {
                 {console.log(totalPagination)}
             </div>
             <PaginationComponent totalResults={totalPagination?.total_results} resultsPerPage={totalPagination.results?.length} onPageChange={handlePageChange} />
+            <MobilePagination totalResults={totalPagination?.total_results} resultsPerPage={totalPagination.results?.length} onPageChange={handlePageChange} />
             <FooterComponent />
         </>
     )
