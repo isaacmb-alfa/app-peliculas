@@ -108,10 +108,12 @@ const RelatedMoviesPage = () => {
             <PaginationComponent 
             totalResults={totalPages?.total_results} 
             resultsPerPage={totalPages.results?.length} 
+                currentPageOptional={currentPage}
             onPageChange={handlePageChange} />
             <MobilePagination 
             totalResults={totalPages?.total_results} 
             resultsPerPage={totalPages.results?.length} 
+                currentPageOptional={currentPage}
             onPageChange={handlePageChange} />
             <FooterComponent />
         </>

@@ -199,7 +199,7 @@ const NavBarComponent = ({ handleSearchResults, onSelectChange, currentSearchTer
                             </li>
                         </ul>
                         {/* Ajustar la posición del select para dispositivos móviles */}
-                        <select onChange={handleSelectChange} id="lenguage" className="md:block md:w-auto w-full p-2 rounded-md bg-transparent dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 border dark:text-white text-gray-900 mt-2 md:mt-0 md:ms-3" name="select">
+                        <select onChange={handleSelectChange} id="lenguage" className="md:block md:w-auto w-full p-2 rounded-md bg-transparent dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 border border-gray-300 dark:text-white  mt-2 md:mt-0 md:ms-3 text-gray-800" name="select">
                             <option value="es-MX">Español</option>
                             <option value="en-US">English</option>
                         </select>

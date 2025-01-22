@@ -12,10 +12,8 @@ function Home() {
     const navigate = useNavigate();
     const [movieList, setMovieList] = useState([]);
     const [totalPagination, setTotalPagination] = useState({});
-    const [isRequestDone, setIsRequestDone] = useState(false);
     const [lenguage, setLenguage] = useState('es-MX');
     const [currentPage, setCurrentPage] = useState(1);
-    /* revisar funcionamiento */
     const [searchResults, setSearchResults] = useState([]);
     const [currentSearchTerm, setCurrentSearchTerm] = useState('');
 

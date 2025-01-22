@@ -18,6 +18,10 @@ const CardComponentHZ = ({ movie }) => { // Recibe la prop movie
     const descriptionCard = movie?.overview ? movie.overview.split(' ').slice(0, 20).join(' ') + "..." : "Sin descripción.";
     const linkFrendly = movie?.title ? slugify(movie.title) : "no-title";
 
+    const toTop = () => {
+        window.scrollTo(0, 0);
+    }
+
     return (
         <div className="w-full px-4 mb-4">
             <div className="flex border border-gray-900 rounded p-4 shadow-xl">
@@ -29,7 +33,7 @@ const CardComponentHZ = ({ movie }) => { // Recibe la prop movie
                 <div className="flex-grow">
                     <h2 className="text-lg font-bold">{movie?.title}</h2>
                     <p className="text-sm text-gray-400 line-clamp-2">{descriptionCard}</p>
-                    <NavLink
+                    <NavLink onClick={toTop}
                         className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-2"
                         to={`/${linkFrendly}/${movie?.id}`}
                     >

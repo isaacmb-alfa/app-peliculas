@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from 'react';
 
-function PaginationComponent({ totalResults, resultsPerPage, onPageChange }) {
-    const [currentPage, setCurrentPage] = useState(1);
+function PaginationComponent({ totalResults, resultsPerPage, onPageChange, currentPageOptional: currentPageDirect }) {
+    const [currentPage, setCurrentPage] = useState(currentPageDirect || 1);
     const totalPages = Math.ceil(totalResults / resultsPerPage) || 0;
     const [visiblePages, setVisiblePages] = useState([]);
+
+    console.log(currentPageDirect);
+    
+    // Handle potential errors in `currentPageDirect`
+    useEffect(() => {
+        if (currentPageDirect < 1 || currentPageDirect > totalPages) {
+            console.warn(
+                `Invalid currentPageDirect prop: ${currentPageDirect}. Defaulting to 1.`
+            );
+            setCurrentPage(1);
+        }
+    }, [currentPageDirect, totalPages]);
 
     useEffect(() => {
         const generateVisiblePages = () => {
@@ -20,8 +32,9 @@ function PaginationComponent({ totalResults, resultsPerPage, onPageChange }) {
     }, [currentPage, totalPages]);
 
     const handlePageChange = (page) => {
-        setCurrentPage(page);
-        onPageChange(page);
+        const currentP = page < currentPageDirect ? currentPageDirect : page;
+        setCurrentPage(currentP);
+        onPageChange(currentP);
     };
     const handlePrevPage = () => {
         if (currentPage > 1) {
